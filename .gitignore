@@ -1,0 +1,7 @@
+# OS-specific
+.DS_Store
+._.DS_Store
+
+.vscode
+bin
+config.yaml
