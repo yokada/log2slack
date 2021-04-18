@@ -72,6 +72,8 @@ func main() {
 	defer watcher.Close()
 
 	done := make(chan bool)
+	defer close(done)
+
 	go func() {
 		for {
 			select {
