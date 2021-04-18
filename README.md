@@ -16,6 +16,12 @@ go build -o bin/log2slack cmd/log2slack.go
 ./bin/log2slack /path/to/file.log
 ```
 
+# Test
+
+```shell
+go test ./... -v
+```
+
 # Refs
 
 [ systemd を利用してプロセスをデーモン化する - cameong’s blog ]( https://cameong.hatenablog.com/entry/2016/10/18/121400 )
