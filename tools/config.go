@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/go-yaml/yaml"
 )
@@ -38,10 +38,10 @@ func GetConfig() (*Config, error) {
 	}
 
 	config := &Config{}
-	configPath := path.Join(wd, "/config.yaml")
+	configPath := filepath.Join(wd, "/config.yaml")
 	bytes, err := loadConfigYaml(configPath)
 	if err != nil {
-		configPath = path.Join(wd, "../config.yaml")
+		configPath = filepath.Join(wd, "../config.yaml")
 		bytes, err = loadConfigYaml(configPath)
 		if err != nil {
 			return nil, err

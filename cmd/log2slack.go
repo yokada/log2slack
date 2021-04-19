@@ -6,7 +6,7 @@ import (
 	"log"
 	"log2slack/tools"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/fsnotify/fsnotify"
 )
@@ -22,11 +22,11 @@ func pathExists(path string) bool {
 	return !os.IsNotExist(err)
 }
 
-func createScanner(filepath string) (*bufio.Scanner, error) {
+func createScanner(logfile string) (*bufio.Scanner, error) {
 	closeFile()
 
-	if pathExists(filepath) {
-		fp, err = os.Open(filepath)
+	if pathExists(logfile) {
+		fp, err = os.Open(logfile)
 		if err != nil {
 			return nil, err
 		}
@@ -55,13 +55,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	filepath := os.Args[1]
-	dir := path.Dir(filepath)
+	logfile := os.Args[1]
+	dir := filepath.Dir(logfile)
 	if !pathExists(dir) {
 		log.Fatalf("directory not found dir=%v", dir)
 	}
 
-	scanner, _ := createScanner(filepath)
+	scanner, _ := createScanner(logfile)
 	defer closeFile()
 
 	watcher, err := fsnotify.NewWatcher()
@@ -85,7 +85,7 @@ func main() {
 				log.Println("event=", event)
 				if event.Op&fsnotify.Create == fsnotify.Create {
 					log.Printf("event.Name=%v\n", event.Name)
-					if event.Name == filepath {
+					if event.Name == logfile {
 						scanner, _ = createScanner(event.Name)
 					}
 				} else if event.Op&fsnotify.Write == fsnotify.Write {
@@ -102,7 +102,7 @@ func main() {
 						<-doneSend
 					}
 				} else if event.Op&fsnotify.Remove == fsnotify.Remove {
-					if event.Name == filepath {
+					if event.Name == logfile {
 						closeFile()
 					}
 				}
