@@ -24,7 +24,7 @@ go test ./... -v
 
 # Refs
 
-[ systemd を利用してプロセスをデーモン化する - cameong’s blog ]( https://cameong.hatenablog.com/entry/2016/10/18/121400 )
+[ Upstart script for Go service ]( https://gist.github.com/sdrew/8e200bad0ce625f64c6d )
 
 To help using inotify get through tail command in main function:
 [ coreutils/tail.c at master · coreutils/coreutils ]( https://github.com/coreutils/coreutils/blob/master/src/tail.c )
